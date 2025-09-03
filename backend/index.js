@@ -14,7 +14,7 @@ dotenv.config()
 
 const port=process.env.PORT || 5000
 app.use(cors({
-    origin:"https://photoflow-frontend.onrender.com",
+    origin:"https://photoflow-front.onrender.com",
     credentials:true
 }))
 app.use(express.json())
