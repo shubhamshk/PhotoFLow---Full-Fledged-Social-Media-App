@@ -6,7 +6,7 @@ const server=http.createServer(app)
 
 const io=new Server(server,{
     cors:{
-        origin:"https://photoflow-frontend.onrender.com",
+        origin:"https://photoflow-front.onrender.com",
         methods:["GET","POST"]
     }
 })
