@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import connectDb from "./config/db.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+
 import authRouter from "./routes/auth.routes.js";
 import userRouter from "./routes/user.routes.js";
 import postRouter from "./routes/post.routes.js";
@@ -15,33 +16,16 @@ dotenv.config();
 
 const port = process.env.PORT || 5000;
 
-// ✅ Allowed origins
-const allowedOrigins = [
-  "https://photoflow-front.onrender.com",
-  "https://www.photoflow-front.onrender.com", // just in case
-  "http://localhost:5173", // local dev
-];
-
-// ✅ Setup CORS middleware
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // allow requests with no origin (like mobile apps, curl)
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true, // allow cookies and auth headers
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    origin: "https://photoflow-front.onrender.com",
+    credentials: true,
   })
 );
 
 app.use(express.json());
 app.use(cookieParser());
 
-// ✅ Routes
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/post", postRouter);
@@ -49,8 +33,7 @@ app.use("/api/loop", loopRouter);
 app.use("/api/story", storyRouter);
 app.use("/api/message", messageRouter);
 
-// ✅ Start server
 server.listen(port, () => {
   connectDb();
-  console.log(`🚀 Server started on port ${port}`);
+  console.log("🚀 Server started");
 });
