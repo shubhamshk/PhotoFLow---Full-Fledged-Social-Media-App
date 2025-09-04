@@ -18,13 +18,18 @@ const port = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: "https://photoflow-front.onrender.com",
+    origin: "https://photoflow-front.onrender.com", // frontend URL
     credentials: true,
   })
 );
 
 app.use(express.json());
 app.use(cookieParser());
+
+// ✅ root route to avoid "Cannot GET /"
+app.get("/", (req, res) => {
+  res.send("🚀 Backend is running on Render");
+});
 
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
@@ -35,5 +40,5 @@ app.use("/api/message", messageRouter);
 
 server.listen(port, () => {
   connectDb();
-  console.log("🚀 Server started");
+  console.log(`🚀 Server started on port ${port}`);
 });
